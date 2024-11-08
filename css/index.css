@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 * {
   margin: 0;
   padding: 0;
@@ -5,7 +6,7 @@
 }
 
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   line-height: 1.6;
 }
 
@@ -64,30 +65,32 @@ nav .container{
 
 .nav-links {
   display: flex;
+  align-items: center;
   list-style: none;
 }
 
 .nav-links li {
-  margin-left: 20px;
+  margin-left: 30px;
 }
 
 .nav-links a {
   color: #333;
-  text-decoration: none;;
+  text-decoration: none;
+  font-weight: bold;
 }
 
 .btn-register {
-  background-color: #3498db;
-  color: #fff;
+  background-color: #512da8;
+  color: #fff !important;
 }
 
 
 .btn-register:hover {
-  background-color: #93bcd7;
+  background-color: #664ba3;
 }
 
 .hero {
-  background-color: #3498db;
+  background-color: #512da8;
   color: #fff;
   text-align: center;
   padding: 100px 0;
@@ -99,6 +102,7 @@ nav .container{
 
 .hero p {
   margin-bottom: 20px;
+  font-size: 1.5rem;
 }
 
 .featured-listings {
@@ -126,6 +130,5 @@ nav .container{
 
 .listing-card .price {
   font-weight: bold;
-  color: #3498db;
   padding-bottom: 20px;
 }
