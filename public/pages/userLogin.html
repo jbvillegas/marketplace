@@ -123,7 +123,7 @@
                 .then((userCredential) => {
                     const user = userCredential.user;
                     console.log("Signed in user:", user);
-                    alert("User signed in successfully");
+                    window.location.href = "index.html";
                 })
                 .catch((error) => {
                     const errorCode = error.code;
