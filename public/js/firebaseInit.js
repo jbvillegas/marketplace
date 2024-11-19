@@ -32,8 +32,9 @@ export const fetchProducts = async () => {
 
     snapshot.forEach((doc) => {
       products.push({ id: doc.id, ...doc.data() });
-      console.log("Product data:", doc.data());
     });
+
+    console.log("Fetched products:", products);
 
   } catch (error) {
     console.error("Error fetching products:", error.message);
