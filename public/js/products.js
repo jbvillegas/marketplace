@@ -11,7 +11,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   let products = [];
   try {
     products = await fetchProducts();
-    console.log("Fetched products:", products);
   } catch (error) {
     console.error("Error fetching products:", error.message);
     alert("Failed to load products.");
