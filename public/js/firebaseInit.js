@@ -2,6 +2,10 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+import {
+  collection,
+  getDocs,
+} from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBSHjL6g5rYxi3_zEdQcGj-7Lu7NkHFNjI",
@@ -19,3 +23,22 @@ const db = getFirestore(app);
 const auth = getAuth(app);
 
 export { db, auth };
+
+export const fetchProducts = async () => {
+  const products = [];
+  try {
+    const productsRef = collection(db, "products");
+    const snapshot = await getDocs(productsRef);
+
+    snapshot.forEach((doc) => {
+      products.push({ id: doc.id, ...doc.data() });
+      console.log("Product data:", doc.data());
+    });
+
+  } catch (error) {
+    console.error("Error fetching products:", error.message);
+    alert("Failed to load products. Please try again later.");
+  }
+
+  return products;
+};
