@@ -63,7 +63,7 @@
   position: absolute;
   top: 10px;
   right: 10px;
-  background-color: #512da8;
+  background-color: #ff0000;
   color: white;
   padding: 5px 10px;
   border-radius: 15px;
@@ -102,7 +102,7 @@
 .price {
   font-size: 1.2rem;
   font-weight: bold;
-  color: #512da8;
+  color: #000000;
 }
 
 .location {
@@ -112,7 +112,7 @@
 
 .btn-contact {
   width: 100%;
-  background-color: #512da8;
+  background-color: #493628;
   color: white;
   padding: 10px;
   border: none;
@@ -122,7 +122,7 @@
 }
 
 .btn-contact:hover {
-  background-color: #412da8;
+  background-color: #493628;
 }
 
 .pagination {
@@ -147,7 +147,7 @@
 }
 
 .btn-page.active {
-  background-color: #512da8;
+  background-color: #493628;
   color: white;
   border: none;
 }

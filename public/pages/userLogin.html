@@ -5,16 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../js/script.js">
+    <link rel="icon" href="../assets/images/icons8-book-16.png" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="stylesheet" href="../css/style.css">
-    
+    <link rel="stylesheet" href="../css/userLogin.css">
     <script type="module" src="https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js"></script>
     <script type="module" src="https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js"></script>
     <title>JDM Marketplace</title>
 </head>
 
 <body>
-
+    
     <div class="container" id="container">
         <!-- Sign Up Form -->
         <div class="form-container sign-up">
@@ -52,7 +52,7 @@
             </form>
         </div>
 
-        <!-- Toggle Buttons -->
+        <!-- Overlay -->
         <div class="toggle-container">
             <div class="toggle">
                 <div class="toggle-panel toggle-left">
@@ -70,7 +70,7 @@
     </div>
 
     <script type="module">
-        // Firebase configuration
+        /* Firebase configuration */
         const firebaseConfig = {
             apiKey: "AIzaSyBSHjL6g5rYxi3_zEdQcGj-7Lu7NkHFNjI",
             authDomain: "jdm-marketplace.firebaseapp.com",
@@ -82,7 +82,7 @@
             measurementId: "G-K3FSCLF29Z",
         };
 
-        // Initialize Firebase
+        /* Initialize Firebase */
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
         
@@ -93,12 +93,11 @@
         const registerBtn = document.getElementById('register');
         const loginBtn = document.getElementById('login');
 
-        // Add the "active" class when "Sign Up" is clicked
+        /* Toggle between Sign Up and Sign In */
         registerBtn.addEventListener('click', () => {
         container.classList.add("active");
         });
 
-        // Remove the "active" class when "Sign In" is clicked
         loginBtn.addEventListener('click', () => {
         container.classList.remove("active");
         });
@@ -113,7 +112,8 @@
                 .then((userCredential) => {
                     const user = userCredential.user;
                     console.log(user);
-                    alert("User created successfully");
+                    alert("User created successfully!");
+                    window.location.href = "userLogin.html";
                 })
                 .catch((error) => {
                     const errorCode = error.code;

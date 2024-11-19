@@ -9,8 +9,8 @@
 body {
     font-family: 'Montserrat', sans-serif;
     line-height: 1.6;
-    background-color: #c9d6ff;
-    background: linear-gradient(to right, #c9d6ff, #e2e2e2);
+    background-color: #E4E0E1;
+    background: linear-gradient(to right, #E4E0E1, #D6C0B3);
     min-height: 100vh;
 }
 
@@ -48,16 +48,16 @@ h3 {
     font-size: 12px;
     font-weight: 600;
     letter-spacing: 0.5px;
-    text-transform: uppercase;
+    text-transform: uppercase;  
 }
 
 header {
-    background-color: #fff;
+    background-color: #493628;
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
 nav {
-    display: flex;
+    display: flex;  
     justify-content: space-between;
     align-items: center;
     padding: 20px 20px;
@@ -69,12 +69,12 @@ nav {
 .logo {
     font-size: 1.5rem;
     font-weight: bold;
-    color: #512da8;
+    color: #AB886D;
 }
 
 .logo a {
     text-decoration: none;
-    color: #512da8;
+    color: #ffffff;
 }
 
 .nav-links {
@@ -88,18 +88,18 @@ nav {
 }
 
 .nav-links a {
-    color: #333;
+    color: #ffffff;
     text-decoration: none;
     font-weight: bold;
 }
 
 .btn-register {
-    background-color: #512da8;
+    background-color: #D6C0B3;
     color: #fff !important;
 }
 
 .btn-register:hover {
-    background-color: #412da8;
+    background-color: #E4E0E1;
 }
 
 .hero,
@@ -120,7 +120,7 @@ nav {
 }
 
 .hero {
-    background: linear-gradient(to right, #5c6bc0, #412da8);
+    background: linear-gradient(to right, #493628, #493628);
     color: #fff;
     text-align: center;
 }
@@ -151,11 +151,15 @@ nav {
 }
 
 .btn-search {
-    background: #5c6bc0;
+    background: #D6C0B3;
     color: white;
     border: none;
     padding: 0.5rem 2rem;
     cursor: pointer;
+}
+
+.btn-search:hover {
+    background: #E4E0E1;
 }
 
 .listings-grid {
@@ -163,7 +167,6 @@ nav {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
 }
- 
 
 .steps {
     display: grid;
@@ -179,7 +182,7 @@ nav {
 .step-icon {
     width: 80px;
     height: 80px;
-    background: #4CAF50;
+    background: #493628;
     border-radius: 50%;
     margin: 0 auto 1rem;
     display: flex;
@@ -210,7 +213,7 @@ nav {
 }
 
 footer {
-    background-color: #333;
+    background-color: #493628;
     color: #fff;
     padding: 60px 0 20px;
     margin-top: 40px;

@@ -1,20 +1,5 @@
 import { auth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 
-const container = document.getElementById('container');
-const registerBtn = document.getElementById('register');
-const loginBtn = document.getElementById('login');
-
-// Add the "active" class when "Sign Up" is clicked
-registerBtn.addEventListener('click', () => {
-   container.classList.add("active");
-});
-
-// Remove the "active" class when "Sign In" is clicked
-loginBtn.addEventListener('click', () => {
-    container.classList.remove("active");
-});
-
-
 // Check if passwords match
 function checkPasswordMatch() {
   const password = document.querySelector('#password').value.trim();
