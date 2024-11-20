@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>List Your Textbook - JDM Textbook Marketplace</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"/>
+    <link rel="stylesheet" href="../css/index.css" />
+    <link rel="stylesheet" href="../css/listing.css" />
+    <link rel="icon" type="image/svg+xml" href="assets/scroll-solid (2).svg" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div class="logo">
+          <a href="index.html">JDM Textbook Marketplace</a>
+        </div>
+        <ul class="nav-links">
+          <li><a href="products.html">SEARCH</a></li>
+          <li><a href="listing.html">SELL</a></li>
+          <li><a href="userLogin.html" class="btn btn-register">SIGN IN</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section class="listing-form container">
+        <h1>List Your Textbook</h1>
+        <form id="listingForm">
+          <div class="form-group">
+            <label for="title">Book Title*</label>
+            <input type="text" id="title" required>
+          </div>
+
+          <div class="form-group">
+            <label for="author">Author*</label>
+            <input type="text" id="author" required>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="edition">Edition*</label>
+              <input type="number" id="edition" min="1" required>
+            </div>
+            <div class="form-group">
+              <label for="price">Price ($)*</label>
+              <input type="number" id="price" min="0" step="0.01" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="subject">Subject*</label>
+              <select id="subject" required>
+                <option value="">Select Subject</option>
+                <option value="Science">Science</option>
+                <option value="Mathematics">Mathematics</option>
+                <option value="Literature">Literature</option>
+                <option value="History">History</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="condition">Condition*</label>
+              <select id="condition" required>
+                <option value="">Select Condition</option>
+                <option value="New">New</option>
+                <option value="Like New">Like New</option>
+                <option value="Good">Good</option>
+                <option value="Fair">Fair</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="image">Book Image*</label>
+            <input type="file" id="image" accept="image/*" required>
+          </div>
+
+          <button type="submit" class="btn btn-submit">Submit for Review</button>
+        </form>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h3>JDM Textbook Market</h3>
+            <p>Buy and sell college textbooks.</p>
+          </div>
+          <div class="footer-section">
+            <h3>Quick Links</h3>
+            <ul>
+              <li><a href="#">Home</a></li>
+              <li><a href="#">Search</a></li>
+              <li><a href="#">Sell</a></li>
+              <li><a href="#">Login</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h3>Contact Us</h3>
+            <p>Email: support@jdmtextbook.com</p>
+            <p>Phone: (123) 456-7890</p>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2024 JDM Textbook Market. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script type="module" src="../js/listing.js"></script>
+  </body>
+</html>
