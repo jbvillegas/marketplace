@@ -1,10 +1,10 @@
-import { fetchNotApprovedProducts } from "./firebaseInit.js";
+import { fetchNotApprovedProducts, fetchApprovedProducts } from "./firebaseInit.js";
 import { doc, updateDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 import { db } from "./firebaseInit.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
   const productsTable = document.querySelector(".table");
-  
+
   let products = [];
   try {
     products = await fetchNotApprovedProducts();
@@ -70,4 +70,15 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Make handleApproval available globally
   window.handleApproval = handleApproval;
+
+  let approvedBooks = []
+  try {
+    approvedBooks = await fetchApprovedProducts();
+    renderProductsTable(products);
+  } catch (error) {
+    console.error("Error fetching products:", error.message);
+    alert("Failed to load products.");
+  }
+  const totalBooks = document.getElementById('total-books');
+  totalBooks.innerHTML = `Total Books: ${products.length + approvedBooks.length}`;
 });
