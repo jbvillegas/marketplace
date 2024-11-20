@@ -31,7 +31,7 @@ export const fetchProducts = async () => {
     const snapshot = await getDocs(productsRef);
 
     snapshot.forEach((doc) => {
-      products.push({ id: doc.id, ...doc.data() });
+      if (doc.data().isApproved) products.push({ id: doc.id, ...doc.data() });
     });
 
     console.log("Fetched products:", products);
