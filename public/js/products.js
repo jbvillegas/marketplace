@@ -1,5 +1,6 @@
-import { fetchApprovedProducts, auth } from "./firebaseInit.js";
+import { fetchApprovedProducts, auth, db } from "./firebaseInit.js";
 import { signOut } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+import { arrayUnion, doc, updateDoc, arrayRemove } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
   const productsGrid = document.querySelector(".products-grid");
@@ -9,7 +10,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const priceFilter = document.querySelector(".filter-select:nth-child(2)");
   const conditionFilter = document.querySelector(".filter-select:nth-child(3)");
   const btnRegister = document.querySelector(".btn-register");
-  
+
   let products = [];
   try {
     products = await fetchApprovedProducts();
@@ -77,7 +78,10 @@ document.addEventListener("DOMContentLoaded", async () => {
               <p class="price">${product.price}$</p>
               <p class="location">${product.location}</p>
             </div>
-            <button class="btn btn-contact">Contact Seller</button>
+            <div class="btn-group">
+              <button class="btn btn-contact">Contact Seller</button>
+              <button class="btn btn-favorite" data-id="${product.id}">Add to favorites</button>
+            </div>
           </div>
       `;
 
@@ -154,4 +158,32 @@ document.addEventListener("DOMContentLoaded", async () => {
   startFiltersFromUrl();
   filterProducts();
   renderProducts(filteredProducts);
+
+  document.querySelectorAll(".btn-favorite").forEach(button => {
+    button.addEventListener("click", async (e) => {
+      const productId = e.target.dataset.id;
+      await addToFavorites(productId);
+    });
+  });
 });
+
+const addToFavorites = async (productId) => {
+  if (!auth.currentUser) {
+    alert("Please sign in to add favorites.");
+    window.location.href = "userLogin.html";
+    return;
+  }
+
+  try {
+    const userId = auth.currentUser.uid;
+    const userDocRef = doc(db, `users/${userId}`);
+    await updateDoc(userDocRef, {
+      favorites: arrayUnion(productId)
+    });
+
+    alert("Product added to favorites!");
+  } catch (error) {
+    console.error("Error adding to favorites:", error);
+    alert("Failed to add to favorites. Please try again.");
+  }
+};
