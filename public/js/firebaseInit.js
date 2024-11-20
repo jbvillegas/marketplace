@@ -1,7 +1,7 @@
 // Initialize Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+import { getAuth, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 import {
   collection,
   getDocs,
@@ -22,6 +22,8 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 
+setPersistence(auth, browserLocalPersistence);
+
 export { db, auth };
 
 export const fetchApprovedProducts = async () => {
@@ -35,7 +37,6 @@ export const fetchApprovedProducts = async () => {
     });
 
     console.log("Fetched products:", products);
-
   } catch (error) {
     console.error("Error fetching products:", error.message);
     alert("Failed to load products. Please try again later.");
@@ -55,11 +56,27 @@ export const fetchNotApprovedProducts = async () => {
     });
 
     console.log("Fetched products:", products);
-
   } catch (error) {
     console.error("Error fetching products:", error.message);
     alert("Failed to load products. Please try again later.");
   }
 
+  return products;
+};
+
+export const fetchFavoriteProducts = async (productIds) => {
+  const products = [];
+  try {
+    const productsRef = collection(db, "products");
+    const snapshot = await getDocs(productsRef);
+
+    snapshot.forEach((doc) => {
+      if (productIds.includes(doc.id)) {
+        products.push({ id: doc.id, ...doc.data() });
+      }
+    });
+  } catch (error) {
+    console.error("Error fetching products:", error);
+  }
   return products;
 };
