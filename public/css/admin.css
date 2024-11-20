@@ -33,7 +33,7 @@ body {
     color: #fff;
     text-decoration: none;
 }
-
+  
 .sidebar a {
     display: block;
     color: #fff;
@@ -132,7 +132,7 @@ body {
 .table th,
 .table td {
     padding: 12px;
-    text-align: left;
+    text-align: center;
     border-bottom: 1px solid #eee;
 }
 
