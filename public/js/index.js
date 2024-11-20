@@ -1,4 +1,4 @@
-import { fetchProducts, auth } from "./firebaseInit.js";
+import { fetchApprovedProducts, auth } from "./firebaseInit.js";
 import { signOut } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   let products = [];
   try {
-    products = await fetchProducts();
+    products = await fetchApprovedProducts();
   } catch (error) {
     console.error("Error fetching products:", error.message);
     alert("Failed to load products.");
