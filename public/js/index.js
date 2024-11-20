@@ -1,11 +1,12 @@
-import { fetchProducts } from "./firebaseInit.js";
+import { fetchProducts, auth } from "./firebaseInit.js";
+import { signOut } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
   const searchInput = document.querySelector(".search-bar input");
   const searchButton = document.querySelector(".btn-search");
   const categoryButtons = document.querySelectorAll(".category-card");
   const productsGrid = document.querySelector(".listings-grid");
-
+  const btnRegister = document.querySelector(".btn-register");
 
   let products = [];
   try {
@@ -17,10 +18,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const renderProducts = (products) => {
     productsGrid.innerHTML = "";
-  
+
     // Limit to 3 products
     const productsToRender = products.slice(0, 3);
-  
+
     productsToRender.forEach((product) => {
       const productCard = document.createElement("div");
       productCard.classList.add("product-card");
@@ -40,10 +41,10 @@ document.addEventListener("DOMContentLoaded", async () => {
           <button class="btn btn-contact">Contact Seller</button>
         </div>
       `;
-  
+
       productsGrid.appendChild(productCard);
     });
-  };  
+  };
 
   const getUrlParams = () => {
     const params = new URLSearchParams(window.location.search);
@@ -75,9 +76,20 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   searchButton.addEventListener("click", handleSearch);
 
-
-
   // Add event listeners to category buttons and redirect to products.html with the category parameter
-
+  if (auth.currentUser) {
+    btnRegister.innerHTML = "Sign Out";
+    btnRegister.addEventListener("click", async (e) => {
+      e.preventDefault();
+      try {
+        await signOut(auth);
+        window.location.href = "index.html";
+        alert("You have been signed out.");
+      } catch (error) {
+        console.error("Error signing out:", error);
+        alert("Failed to sign out. Please try again.");
+      }
+    });
+  }
   renderProducts(products);
 });
