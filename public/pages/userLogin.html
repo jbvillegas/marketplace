@@ -85,9 +85,11 @@
         /* Initialize Firebase */
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
-        
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
+        const db = getFirestore(app);
 
         const container = document.getElementById('container');
         const registerBtn = document.getElementById('register');
@@ -106,6 +108,7 @@
         // Handle Sign Up
         document.getElementById("signUpForm").addEventListener("submit", async (e) => {
             e.preventDefault();
+            const name = document.getElementById("name").value;
             const email = document.getElementById("email").value;
             const password = document.getElementById("password").value;
             createUserWithEmailAndPassword(auth, email, password)
@@ -121,6 +124,26 @@
                     console.log(errorCode, errorMessage);
                     alert(errorMessage);
                 });
+
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+
+                // Create user document in Firestore
+                await setDoc(doc(db, "users", user.uid), {
+                    name: name,
+                    email: email,
+                    favorites: [],
+                    listings: [],
+                    userId: user.uid,
+                });
+
+                alert("User created successfully!");
+                window.location.href = "index.html";
+            } catch (error) {
+                console.error("Error creating user:", error);
+                alert(error.message);
+            }
         });
 
         // Handle Sign In
