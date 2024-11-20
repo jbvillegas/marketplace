@@ -1,4 +1,5 @@
-import { fetchApprovedProducts } from "./firebaseInit.js";
+import { fetchApprovedProducts, auth } from "./firebaseInit.js";
+import { signOut } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
   const productsGrid = document.querySelector(".products-grid");
@@ -7,7 +8,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   const subjectFilter = document.querySelector(".filter-select:nth-child(1)");
   const priceFilter = document.querySelector(".filter-select:nth-child(2)");
   const conditionFilter = document.querySelector(".filter-select:nth-child(3)");
-
+  const btnRegister = document.querySelector(".btn-register");
+  
   let products = [];
   try {
     products = await fetchApprovedProducts();
@@ -133,6 +135,21 @@ document.addEventListener("DOMContentLoaded", async () => {
   subjectFilter.addEventListener("change", filterProducts);
   priceFilter.addEventListener("change", filterProducts);
   conditionFilter.addEventListener("change", filterProducts);
+
+  if (auth.currentUser) {
+    btnRegister.innerHTML = "Sign Out";
+    btnRegister.addEventListener("click", async (e) => {
+      e.preventDefault();
+      try {
+        await signOut(auth);
+        window.location.href = "index.html";
+        alert("You have been signed out.");
+      } catch (error) {
+        console.error("Error signing out:", error);
+        alert("Failed to sign out. Please try again.");
+      }
+    });
+  }
 
   startFiltersFromUrl();
   filterProducts();
