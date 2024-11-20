@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const urlParams = getUrlParams();
   if (urlParams.search) {
     searchInput.value = urlParams.search;
-  }
+  } 
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -91,5 +91,16 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     });
   }
+
+  categoryButtons.forEach((button) => {
+    button.addEventListener("click", (e) => {
+      const subject = e.target.dataset.subject;
+      const searchParams = new URLSearchParams();
+
+      searchParams.set("subject", subject);
+      window.location.href = `products.html?${searchParams.toString()}`;
+    });
+  });
+
   renderProducts(products);
 });
