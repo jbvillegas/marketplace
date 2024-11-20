@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="../css/admin.css">
+  <link rel="icon" type="image/png" href="../assets/images/icons8-book-16.png" />
+  <style>
+    /* Ensure charts have size */
+    canvas {
+      width: 100% !important;
+      height: 300px !important;
+    }
+  </style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2><a href="admin.html" class="btn">DASHBOARD</a></h2>  
+    <a href="index.html" class="btn">Home</a>
+    <a href="#" class="btn">Customers</a>
+    <a href="userLogin.html" class="btn">Logout</a>
+  </div>
+
+  <!-- Content Area -->
+  <div class="content">
+    <div class="header">
+      <h1>Welcome, Admin.</h1>
+    </div>
+
+    <!-- Books Overview Card -->
+    <div class="card">
+      <h3>Books Overview</h3>
+      <div class="stats">
+        <div>Total Books: 125</div>
+      </div>
+    </div>
+
+    <!-- Sales Overview Card -->
+    <div class="card">
+      <h3>Sales Overview</h3>
+      <div class="stats">
+        <div id="totalSales">Total Sales:</div>
+        <div id="pendingOrders">Pending Orders:</div>
+        <div id="booksSold">Books Sold:</div>
+      </div>
+      <div class="charts-row">
+        <div class="chart-container">
+          <canvas id="salesChart"></canvas>
+        </div>
+        <div class="chart-container">
+          <canvas id="booksSoldChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Manage Books Card -->
+    <div class="card">
+      <h3>Manage Books</h3>
+      <button class="btn">Add New Book</button>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p>2024 Book Marketplace. All Rights Reserved.</p>
+  </div>
+
+  <!-- Charts Script -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  // Sales Data for the charts.
+  let totalSales = 1000;
+  let pendingOrders = 1000;
+  let booksSold = 1000;
+
+  // Initialize the charts after the DOM is loaded
+  window.onload = function() {
+    // Sales Chart
+    const salesCtx = document.getElementById('salesChart').getContext('2d');
+    const salesChart = new Chart(salesCtx, {
+      type: 'bar',
+      data: {
+        labels: ['Total Sales', 'Pending Orders', 'Books Sold'],
+        datasets: [{
+          label: 'Sales Overview',
+          data: [totalSales, pendingOrders, booksSold], 
+          backgroundColor: [
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(153, 102, 255, 0.2)'
+          ],
+          borderColor: [
+            'rgba(75, 192, 192, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(153, 102, 255, 1)'
+          ],
+          borderWidth: 3
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false }
+        },
+        scales: {
+          y: { beginAtZero: true }
+        }
+      }
+    });
+
+    // Books Sold Chart (Doughnut)
+    const booksSoldCtx = document.getElementById('booksSoldChart').getContext('2d');
+    const booksSoldChart = new Chart(booksSoldCtx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Fiction', 'Non-Fiction', 'Textbooks'],
+        datasets: [{
+          label: 'Books Sold Breakdown',
+          data: [totalSales, pendingOrders, booksSold], 
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)'
+          ],
+          borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)'
+          ],
+          borderWidth: 3
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: true }
+        }
+      }
+    });
+
+    // Update stats and charts after the charts are created
+    function updateStats() {
+      document.getElementById('totalSales').textContent = `Total Sales: $${totalSales}`;
+      document.getElementById('pendingOrders').textContent = `Pending Orders: ${pendingOrders}`;
+      document.getElementById('booksSold').textContent = `Books Sold: ${booksSold}`;
+
+      // Update the sales chart with the new values
+      salesChart.data.datasets[0].data = [totalSales, pendingOrders, booksSold];
+      salesChart.update();
+
+      // Update the books sold chart (Doughnut) with the new breakdown
+      booksSoldChart.data.datasets[0].data = [totalSales, pendingOrders, booksSold];
+      booksSoldChart.update();
+    }
+
+    // Simulate a change in data after 3 seconds and update the stats and charts
+    setTimeout(() => {
+      totalSales = 5000;
+      pendingOrders = 500;
+      booksSold = 400;
+      updateStats();  // This will update both the card and the charts
+    }, 2000); // Wait 2 seconds and update
+  };
+</script>
+
+</body>
+</html>
