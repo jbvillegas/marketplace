@@ -1,5 +1,12 @@
-import { fetchNotApprovedProducts, fetchApprovedProducts } from "./firebaseInit.js";
-import { doc, updateDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+import {
+  fetchNotApprovedProducts,
+  fetchApprovedProducts,
+} from "./firebaseInit.js";
+import {
+  doc,
+  updateDoc,
+  deleteDoc,
+} from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 import { db } from "./firebaseInit.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -18,13 +25,28 @@ document.addEventListener("DOMContentLoaded", async () => {
     try {
       const productRef = doc(db, "products", productId);
       await updateDoc(productRef, {
-        isApproved: approve
+        isApproved: approve,
       });
-      
+
       // Remove row from table
       document.getElementById(`row-${productId}`).remove();
-      
-      alert(`Product ${approve ? 'approved' : 'rejected'} successfully!`);
+
+      alert(`Product ${approve ? "approved" : "rejected"} successfully!`);
+    } catch (error) {
+      console.error("Error updating product:", error);
+      alert("Failed to update product status.");
+    }
+  }
+
+  async function handleRejection(productId) {
+    try {
+      const productRef = doc(db, "products", productId);
+      await deleteDoc(productRef);
+
+      // Remove row from table
+      document.getElementById(`row-${productId}`).remove();
+
+      alert("Product rejected successfully!");
     } catch (error) {
       console.error("Error updating product:", error);
       alert("Failed to update product status.");
@@ -32,10 +54,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   function renderProductsTable(products) {
-    const tableBody = document.createElement('tbody');
-    
-    products.forEach(product => {
-      const row = document.createElement('tr');
+    const tableBody = document.createElement("tbody");
+
+    products.forEach((product) => {
+      const row = document.createElement("tr");
       row.id = `row-${product.id}`;
       row.innerHTML = `
         <td>${product.title}</td>
@@ -44,15 +66,15 @@ document.addEventListener("DOMContentLoaded", async () => {
         <td>$${product.price}</td>
         <td>
           <button onclick="handleApproval('${product.id}', true)" class="btn btn-approve">Approve</button>
-          <button onclick="handleApproval('${product.id}', false)" class="btn btn-reject">Reject</button>
+          <button onclick="handleRejection('${product.id}', false)" class="btn btn-reject">Reject</button>
         </td>
       `;
       tableBody.appendChild(row);
     });
 
     // Add headers if they don't exist
-    if (!productsTable.querySelector('thead')) {
-      const tableHead = document.createElement('thead');
+    if (!productsTable.querySelector("thead")) {
+      const tableHead = document.createElement("thead");
       tableHead.innerHTML = `
         <tr>
           <th>Title</th>
@@ -70,8 +92,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Make handleApproval available globally
   window.handleApproval = handleApproval;
+  window.handleRejection = handleRejection;
 
-  let approvedBooks = []
+  let approvedBooks = [];
   try {
     approvedBooks = await fetchApprovedProducts();
     renderProductsTable(products);
@@ -79,6 +102,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.error("Error fetching products:", error.message);
     alert("Failed to load products.");
   }
-  const totalBooks = document.getElementById('total-books');
-  totalBooks.innerHTML = `Total Books: ${products.length + approvedBooks.length}`;
+  const totalBooks = document.getElementById("total-books");
+  totalBooks.innerHTML = `Total Books: ${
+    products.length + approvedBooks.length
+  }`;
 });
