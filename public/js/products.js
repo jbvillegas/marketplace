@@ -1,4 +1,6 @@
-document.addEventListener("DOMContentLoaded", () => {
+import { fetchProducts } from "./firebaseInit.js";
+
+document.addEventListener("DOMContentLoaded", async () => {
   const productsGrid = document.querySelector(".products-grid");
   const searchInput = document.querySelector(".search-bar input");
   const searchButton = document.querySelector(".btn-search");
@@ -6,38 +8,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const priceFilter = document.querySelector(".filter-select:nth-child(2)");
   const conditionFilter = document.querySelector(".filter-select:nth-child(3)");
 
-  const products = [
-    {
-      title: "Introduction to E-commerce",
-      author: "Daniel Prieto",
-      edition: "5th Edition, 2023",
-      price: 20.0,
-      image: "../assets/images/intro-e-comm.webp",
-      location: "New York, NY",
-      condition: "Like New",
-      subject: "Business",
-    },
-    {
-      title: "Introduction to Computer Science",
-      author: "Michael Nastro",
-      edition: "3rd Edition, 2022",
-      price: 35.0,
-      image: "../assets/images/intro-to-cs.jpeg",
-      location: "Boston, MA",
-      condition: "Good",
-      subject: "Computer Science",
-    },
-    {
-      title: "Organic Chemistry",
-      author: "Joaquin Villegas",
-      edition: "8th Edition, 2024",
-      price: 85.0,
-      image: "../assets/images/org-chem.jpeg",
-      location: "Los Angeles, CA",
-      condition: "New",
-      subject: "Science",
-    },
-  ];
+  let products = [];
+  try {
+    products = await fetchProducts();
+  } catch (error) {
+    console.error("Error fetching products:", error.message);
+    alert("Failed to load products.");
+  }
+
+  console.log(products);
 
   let filteredProducts = [...products];
 
@@ -59,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
     subjectFilter.value = subject;
     priceFilter.value = price;
     conditionFilter.value = condition;
-  }
+  };
 
   const setNewUrl = () => {
     const searchParams = new URLSearchParams();
@@ -76,7 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const newUrl = `${window.location.pathname}?${searchParams.toString()}`;
     window.history.pushState({}, "", newUrl);
-  }
+  };
 
   const renderProducts = (products) => {
     productsGrid.innerHTML = "";
@@ -91,7 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <div class="product-info">
             <h3>${product.title}</h3>
             <p class="author">${product.author}</p>
-            <p class="edition">${product.edition}</p>
+            <p class="edition">${product.edition}th Edition</p>
             <div class="product-meta">
               <p class="price">${product.price}$</p>
               <p class="location">${product.location}</p>
