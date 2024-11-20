@@ -58,7 +58,7 @@
     <!-- Manage Books Card -->
     <div class="card">
       <h3>Manage Books</h3>
-      <button class="btn">Add New Book</button>
+      <button class="btn" id="newBookButton">Add New Book</button>
       <table class="table">
         <thead>
           <tr>
@@ -149,6 +149,10 @@
           legend: { display: true }
         }
       }
+    });
+
+    document.getElementById('newBookButton').addEventListener('click', function() {
+      window.location.href = 'listing.html';
     });
 
     // Update stats and charts after the charts are created
