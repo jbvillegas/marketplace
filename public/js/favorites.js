@@ -2,11 +2,13 @@ import { db, auth, fetchFavoriteProducts } from "./firebaseInit.js";
 import {
   doc,
   getDoc,
+  updateDoc,
+  arrayRemove,
 } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
-
   onAuthStateChanged(auth, async (user) => {
     if (user) {
       try {
@@ -56,9 +58,45 @@ const renderProducts = (products) => {
           <p class="location">${product.location}</p>
         </div>
         <button class="btn btn-contact">Contact Seller</button>
+        <button class="btn btn-remove" data-id="${product.id}">Remove from favorites</button>
       </div>
     `;
 
     productsGrid.appendChild(productCard);
   });
+
+  document.querySelectorAll(".btn-remove").forEach((button) => {
+    button.addEventListener("click", async (event) => {
+      const productId = event.target.dataset.id;
+      await removeFavorite(productId);
+    });
+  });
+};
+
+const removeFavorite = async (productId) => {
+  const user = auth.currentUser;
+  if (!user) {
+    alert("Please sign in to remove from favorites.");
+    window.location.href = "userLogin.html";
+    return;
+  }
+
+  try {
+    const userId = user.uid;
+    const userDocRef = doc(db, `users/${userId}`);
+    await updateDoc(userDocRef, {
+      favorites: arrayRemove(productId)
+    });
+
+    // Remove the product card from the DOM
+    const productCard = document.querySelector(`.product-card[data-id="${productId}"]`);
+    if (productCard) {
+      productCard.remove();
+      window.location.reload();
+    }
+    alert("Product removed from favorites!");
+  } catch (error) {
+    console.error("Error removing favorite:", error);
+    alert("Failed to remove from favorites. Please try again.");
+  }
 };
