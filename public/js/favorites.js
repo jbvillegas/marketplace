@@ -1,11 +1,5 @@
 import { db, auth, fetchFavoriteProducts } from "./firebaseInit.js";
-import {
-  doc,
-  getDoc,
-  updateDoc,
-  arrayRemove,
-} from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
-
+import { doc, getDoc, updateDoc, arrayRemove } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -18,9 +12,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         if (userDoc.exists()) {
           const favoriteProductIds = userDoc.data().favorites || [];
-          const favoriteProducts = await fetchFavoriteProducts(
-            favoriteProductIds
-          );
+          const favoriteProducts = await fetchFavoriteProducts(favoriteProductIds);
           renderProducts(favoriteProducts);
         } else {
           console.error("User document not found");
@@ -44,6 +36,7 @@ const renderProducts = (products) => {
   products.forEach((product) => {
     const productCard = document.createElement("div");
     productCard.classList.add("product-card");
+    productCard.setAttribute("data-id", product.id); // Ensure data-id is set correctly
     productCard.innerHTML = `
       <div class="product-image">
         <img src="${product.image}" alt="${product.title}" />
@@ -58,14 +51,15 @@ const renderProducts = (products) => {
           <p class="location">${product.location}</p>
         </div>
         <button class="btn btn-contact">Contact Seller</button>
-        <button class="btn btn-remove" data-id="${product.id}">Remove from favorites</button>
+        <button class="btn btn-remove" data-id="${product.id}">Remove from Favorites</button>
       </div>
     `;
 
     productsGrid.appendChild(productCard);
   });
 
-  document.querySelectorAll(".btn-remove").forEach((button) => {
+  // Add event listeners to remove buttons
+  document.querySelectorAll(".btn-remove").forEach(button => {
     button.addEventListener("click", async (event) => {
       const productId = event.target.dataset.id;
       await removeFavorite(productId);
@@ -75,11 +69,6 @@ const renderProducts = (products) => {
 
 const removeFavorite = async (productId) => {
   const user = auth.currentUser;
-  if (!user) {
-    alert("Please sign in to remove from favorites.");
-    window.location.href = "userLogin.html";
-    return;
-  }
 
   try {
     const userId = user.uid;
@@ -92,8 +81,8 @@ const removeFavorite = async (productId) => {
     const productCard = document.querySelector(`.product-card[data-id="${productId}"]`);
     if (productCard) {
       productCard.remove();
-      window.location.reload();
     }
+
     alert("Product removed from favorites!");
   } catch (error) {
     console.error("Error removing favorite:", error);
