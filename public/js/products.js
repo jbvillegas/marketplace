@@ -1,4 +1,4 @@
-import { fetchProducts } from "./firebaseInit.js";
+import { fetchApprovedProducts } from "./firebaseInit.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
   const productsGrid = document.querySelector(".products-grid");
@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   let products = [];
   try {
-    products = await fetchProducts();
+    products = await fetchApprovedProducts();
   } catch (error) {
     console.error("Error fetching products:", error.message);
     alert("Failed to load products.");

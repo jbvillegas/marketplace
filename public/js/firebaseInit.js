@@ -24,7 +24,7 @@ const auth = getAuth(app);
 
 export { db, auth };
 
-export const fetchProducts = async () => {
+export const fetchApprovedProducts = async () => {
   const products = [];
   try {
     const productsRef = collection(db, "products");
@@ -32,6 +32,26 @@ export const fetchProducts = async () => {
 
     snapshot.forEach((doc) => {
       if (doc.data().isApproved) products.push({ id: doc.id, ...doc.data() });
+    });
+
+    console.log("Fetched products:", products);
+
+  } catch (error) {
+    console.error("Error fetching products:", error.message);
+    alert("Failed to load products. Please try again later.");
+  }
+
+  return products;
+};
+
+export const fetchNotApprovedProducts = async () => {
+  const products = [];
+  try {
+    const productsRef = collection(db, "products");
+    const snapshot = await getDocs(productsRef);
+
+    snapshot.forEach((doc) => {
+      if (!doc.data().isApproved) products.push({ id: doc.id, ...doc.data() });
     });
 
     console.log("Fetched products:", products);
