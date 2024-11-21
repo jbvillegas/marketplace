@@ -1,0 +1,236 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500;700;900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    line-height: 1.6;
+    background-color: #E4E0E1;
+    background: linear-gradient(to right, #E4E0E1, #D6C0B3);
+    min-height: 100vh;
+}
+
+.container {
+    width: 90%;
+    max-width: 800px;
+    margin: 40px auto;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    padding: 20px 30px;
+}
+
+h1, h2, h3 {
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 2.5rem;
+}
+
+h2 {
+    font-size: 2rem;
+}
+
+h3 {
+    font-size: 1.3rem;
+}
+
+header {
+    background-color: #493628;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+nav {
+    display: flex;  
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 20px;
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #AB886D;
+}
+
+.logo a {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    list-style: none;
+}
+
+.nav-links li {
+    margin-left: 30px;
+}
+
+.nav-links a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;  
+}
+
+.btn-register {
+    background-color: #D6C0B3;
+    color: #fff !important;
+}
+
+.btn-register:hover {
+    background-color: #E4E0E1;
+}
+
+.container {
+    width: 90%;
+    max-width: 800px;
+    margin: 40px auto;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    padding: 20px 30px;
+}
+
+h1, h2, h3 {
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    text-align: center;
+    color: #493628;
+}
+
+p {
+    font-size: 1rem;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 8px;
+    color: #493628;
+}
+
+input, 
+select, 
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-family: 'Montserrat', sans-serif;
+}
+
+input[type="submit"] {
+    background-color: #493628   ;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    transition: background-color 0.3s;
+    border-radius: 5px;
+}
+
+input[type="submit"]:hover {
+    background-color: #E4E0E1;
+}
+
+footer {
+    background-color: #493628;
+    color: #fff;
+    padding: 60px 20px 20px; /* Added side padding for better spacing on smaller screens */
+    margin-top: 40px;
+}
+
+.footer-content {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto; /* Center align content */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.footer-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.footer-section h3 {
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #fff;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0; /* Ensure no default padding */
+}
+
+.footer-section ul li {
+    margin-bottom: 10px;
+}
+
+.footer-section a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-section a:hover {
+    color: #D6C0B3; /* Subtle hover effect for links */
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 20px;
+    font-size: 0.9rem;
+    color: #ccc; /* Slightly lighter color for differentiation */
+    border-top: 1px solid #666; /* Softer border color */
+}
+
+@media (max-width: 768px) {
+    .footer-content {
+        gap: 20px; /* Reduce gap for smaller screens */
+    }
+    
+    footer {
+        padding: 40px 20px 20px; /* Adjust padding for smaller devices */
+    }
+}
