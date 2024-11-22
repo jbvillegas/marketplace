@@ -1,5 +1,6 @@
-import { fetchApprovedProducts, auth } from "./firebaseInit.js";
-import { signOut } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+import { auth, db, fetchApprovedProducts } from './firebaseInit.js';
+import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+import { doc, getDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
   const searchInput = document.querySelector(".search-bar input");
@@ -58,7 +59,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const urlParams = getUrlParams();
   if (urlParams.search) {
     searchInput.value = urlParams.search;
-  } 
+  }
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -100,6 +101,24 @@ document.addEventListener("DOMContentLoaded", async () => {
       searchParams.set("subject", subject);
       window.location.href = `products.html?${searchParams.toString()}`;
     });
+  });
+
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      const userDocRef = doc(db, "users", user.uid);
+      const userDoc = await getDoc(userDocRef);
+
+      if (userDoc.exists()) {
+        const isAdmin = userDoc.data().isAdmin;
+
+        if (isAdmin) {
+          const navLinks = document.querySelector(".nav-links");
+          const adminLink = document.createElement("li");
+          adminLink.innerHTML = `<a href="admin.html">ADMIN</a>`;
+          navLinks.appendChild(adminLink);
+        }
+      }
+    }
   });
 
   renderProducts(products);

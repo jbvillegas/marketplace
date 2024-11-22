@@ -1,8 +1,33 @@
 import { db, auth, fetchFavoriteProducts } from "./firebaseInit.js";
-import { doc, getDoc, updateDoc, arrayRemove } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+import {
+  doc,
+  getDoc,
+  updateDoc,
+  arrayRemove,
+} from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+import {
+  signOut,
+  onAuthStateChanged,
+} from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
+  const btnRegister = document.querySelector(".btn-register");
+
+  if (auth.currentUser) {
+    btnRegister.innerHTML = "Sign Out";
+    btnRegister.addEventListener("click", async (e) => {
+      e.preventDefault();
+      try {
+        await signOut(auth);
+        window.location.href = "index.html";
+        alert("You have been signed out.");
+      } catch (error) {
+        console.error("Error signing out:", error);
+        alert("Failed to sign out. Please try again.");
+      }
+    });
+  }
+
   onAuthStateChanged(auth, async (user) => {
     if (user) {
       try {
@@ -12,8 +37,19 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         if (userDoc.exists()) {
           const favoriteProductIds = userDoc.data().favorites || [];
-          const favoriteProducts = await fetchFavoriteProducts(favoriteProductIds);
+          const favoriteProducts = await fetchFavoriteProducts(
+            favoriteProductIds
+          );
           renderProducts(favoriteProducts);
+
+          const isAdmin = userDoc.data().isAdmin;
+
+          if (isAdmin) {
+            const navLinks = document.querySelector(".nav-links");
+            const adminLink = document.createElement("li");
+            adminLink.innerHTML = `<a href="admin.html">ADMIN</a>`;
+            navLinks.appendChild(adminLink);
+          }
         } else {
           console.error("User document not found");
           alert("Failed to load favorites. Please try again.");
@@ -27,6 +63,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       window.location.href = "userLogin.html";
     }
   });
+
 });
 
 const renderProducts = (products) => {
@@ -50,16 +87,18 @@ const renderProducts = (products) => {
           <p class="price">${product.price}$</p>
           <p class="location">${product.location}</p>
         </div>
-        <button class="btn btn-contact">Contact Seller</button>
-        <button class="btn btn-remove" data-id="${product.id}">Remove from Favorites</button>
-      </div>
+        <div class="btn-group">
+              <button class="btn btn-contact">Contact Seller</button>
+              <button class="btn btn-favorite" data-id="${product.id}">Remove from favorites</button>
+            </div>      
+        </div>
     `;
 
     productsGrid.appendChild(productCard);
   });
 
   // Add event listeners to remove buttons
-  document.querySelectorAll(".btn-remove").forEach(button => {
+  document.querySelectorAll(".btn-favorite").forEach((button) => {
     button.addEventListener("click", async (event) => {
       const productId = event.target.dataset.id;
       await removeFavorite(productId);
@@ -74,11 +113,13 @@ const removeFavorite = async (productId) => {
     const userId = user.uid;
     const userDocRef = doc(db, `users/${userId}`);
     await updateDoc(userDocRef, {
-      favorites: arrayRemove(productId)
+      favorites: arrayRemove(productId),
     });
 
     // Remove the product card from the DOM
-    const productCard = document.querySelector(`.product-card[data-id="${productId}"]`);
+    const productCard = document.querySelector(
+      `.product-card[data-id="${productId}"]`
+    );
     if (productCard) {
       productCard.remove();
     }

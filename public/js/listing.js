@@ -1,11 +1,27 @@
-import { db } from "./firebaseInit.js";
-import { collection, addDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
-import { auth } from "./firebaseInit.js";
+import { db, auth } from "./firebaseInit.js";
+import { collection, addDoc, getDoc, doc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 
 document.addEventListener('DOMContentLoaded', () => {
   const listingForm = document.getElementById('listingForm');
   const submitButton = document.querySelector('.btn-submit');
   const imageInput = document.getElementById('image');
+  const btnRegister = document.querySelector(".btn-register");
+
+  if (auth.currentUser) {
+    btnRegister.innerHTML = "Sign Out";
+    btnRegister.addEventListener("click", async (e) => {
+      e.preventDefault();
+      try {
+        await signOut(auth);
+        window.location.href = "index.html";
+        alert("You have been signed out.");
+      } catch (error) {
+        console.error("Error signing out:", error);
+        alert("Failed to sign out. Please try again.");
+      }
+    });
+  }
 
   // Add file input listener to validate and show selected filename
   imageInput.addEventListener('change', (e) => {
@@ -22,6 +38,24 @@ document.addEventListener('DOMContentLoaded', () => {
       const safeName = file.name.replace(/[^a-z0-9.]/gi, '-').toLowerCase();
       if (safeName !== file.name) {
         alert('Note: The image filename will be saved as: ' + safeName);
+      }
+    }
+  });
+
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      const userDocRef = doc(db, "users", user.uid);
+      const userDoc = await getDoc(userDocRef);
+
+      if (userDoc.exists()) {
+        const isAdmin = userDoc.data().isAdmin;
+
+        if (isAdmin) {
+          const navLinks = document.querySelector(".nav-links");
+          const adminLink = document.createElement("li");
+          adminLink.innerHTML = `<a href="admin.html">ADMIN</a>`;
+          navLinks.appendChild(adminLink);
+        }
       }
     }
   });
