@@ -250,3 +250,13 @@ footer {
 #q1, #q2, #q3, #q4, #q5 {
     font-size: 1.3rem;
 }
+
+.thank-you-container{
+    text-align: center;
+    margin: 40px auto;
+    background: #fff;
+    color: #493628;
+    padding: 20px; /* Reduced padding */
+    border-radius: 30px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
