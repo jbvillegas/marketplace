@@ -1,6 +1,11 @@
 import { fetchApprovedProducts, auth, db } from "./firebaseInit.js";
-import { signOut } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
-import { arrayUnion, doc, updateDoc, arrayRemove } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+import { signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+import {
+  arrayUnion,
+  doc,
+  updateDoc,
+  getDoc,
+} from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
   const productsGrid = document.querySelector(".products-grid");
@@ -59,6 +64,24 @@ document.addEventListener("DOMContentLoaded", async () => {
     const newUrl = `${window.location.pathname}?${searchParams.toString()}`;
     window.history.pushState({}, "", newUrl);
   };
+
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      const userDocRef = doc(db, "users", user.uid);
+      const userDoc = await getDoc(userDocRef);
+
+      if (userDoc.exists()) {
+        const isAdmin = userDoc.data().isAdmin;
+
+        if (isAdmin) {
+          const navLinks = document.querySelector(".nav-links");
+          const adminLink = document.createElement("li");
+          adminLink.innerHTML = `<a href="admin.html">ADMIN</a>`;
+          navLinks.appendChild(adminLink);
+        }
+      }
+    }
+  });
 
   const renderProducts = (products) => {
     productsGrid.innerHTML = "";
@@ -159,7 +182,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   filterProducts();
   renderProducts(filteredProducts);
 
-  document.querySelectorAll(".btn-favorite").forEach(button => {
+  document.querySelectorAll(".btn-favorite").forEach((button) => {
     button.addEventListener("click", async (e) => {
       const productId = e.target.dataset.id;
       await addToFavorites(productId);
@@ -178,7 +201,7 @@ const addToFavorites = async (productId) => {
     const userId = auth.currentUser.uid;
     const userDocRef = doc(db, `users/${userId}`);
     await updateDoc(userDocRef, {
-      favorites: arrayUnion(productId)
+      favorites: arrayUnion(productId),
     });
 
     alert("Product added to favorites!");
