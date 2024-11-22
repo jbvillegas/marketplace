@@ -158,8 +158,8 @@ nav {
 .faq-container, .contact-container, .details-container {
     text-align: center;
     margin: 40px auto;
-    background: #493628;
-    color: #fff;
+    background: #fff;
+    color: #000;
     padding: 20px; /* Reduced padding */
     border-radius: 30px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -175,7 +175,7 @@ nav {
 }
  
 .contact-container a {
-    color: #ffffff;
+    color: #000; /* Changed color to black */
     text-decoration: none;
 }
 
