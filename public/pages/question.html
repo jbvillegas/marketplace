@@ -5,9 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>JDM Support- JDM Textbook Marketplace</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"/>
-    <link rel="stylesheet" href="../css/index.css" />
-    <link rel="stylesheet" href="../css/listing.css" />
-    <link rel="icon" type="image/svg+xml" href="assets/scroll-solid (2).svg" />
+    <link rel="stylesheet" href="../css/question.css" />
+    <link rel="icon" type="image/svg+xml" href="../assets/images/icons8-book-16.png" />
   </head>
   <body>
     <header>
@@ -20,31 +19,31 @@
           <li><a href="listing.html">SELL</a></li>
 		  <li><a href="favorites.html">FAVORITES</a></li>
 		  <li><a href="support.html">SUPPORT</a></li>
+		  <li><a href="aboutus.html">ABOUT US</a></li>
           <li><a href="userLogin.html" class="btn btn-register">SIGN IN</a></li>
         </ul>
       </nav>
     </header>
-<body>
     <div class="container">
 
         <h2>Ask a Question</h2>
         <p>If you have any questions regarding our textbooks, pricing, or services, please use the form below to get in touch with us.</p>
 
-        <form action="/submit-question" method="post">
+        <form action="thank_you.html" method="get">
             <div class="form-group">
-                <label for="name">Your Name</label>
+                <label for="name">Your Name*</label>
                 <input type="text" id="name" name="name" required placeholder="Enter your name">
             </div>
 
             <div class="form-group">
-                <label for="email">Your Email</label>
+                <label for="email">Your Email Address*</label>
                 <input type="email" id="email" name="email" required placeholder="Enter your email address">
             </div>
 			
             <div class="form-group">
-                <label for="question-type">Type of Question</label>
+                <label for="question-type">Type of Question*</label>
                 <select id="question-type" name="question-type" required>
-                    <option value="">Select a question type</option>
+                    <option value="">Select a question type*</option>
                     <option value="buying">Buying</option>
                     <option value="selling">Selling</option>
                     <option value="payment">Payment</option>
@@ -54,8 +53,8 @@
                 </select>
             </div>
 
-            <div class="form-group">
-                <label for="question">Your Question</label>
+            <div class="form-group">  
+                <label for="question">Your Question*</label>
                 <textarea id="question" name="question" rows="6" required placeholder="Please type your question here"></textarea>
             </div>
 
@@ -63,11 +62,9 @@
                 <input type="submit" value="Submit Question">
             </div>
         </form>
-
     </div>
-
     <footer>
-      <div class="container">
+      <div class="footer-container">
         <div class="footer-content">
           <div class="footer-section">
             <h3>JDM Textbook Market</h3>
@@ -81,6 +78,7 @@
               <li><a href="listing.html">Sell</a></li>
 			  <li><a href="favorites.html">Favorites</a></li>
               <li><a href="support.html">Support</a></li>
+			  <li><a href="aboutus.html">About Us</a></li>
               <li><a href="userLogin.html">Login</a></li>
             </ul>
           </div>
@@ -95,6 +93,5 @@
         </div>
       </div>
     </footer>
-
 </body>
 </html>
