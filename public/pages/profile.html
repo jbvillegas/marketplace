@@ -17,50 +17,37 @@
         <li><a href="products.html">SEARCH</a></li>
         <li><a href="listing.html">SELL</a></li>
         <li><a href="favorites.html">FAVORITES</a></li>
-    <li><a href="support.html">SUPPORT</a></li>
+        <li><a href="support.html">SUPPORT</a></li>
         <li><a href="userLogin.html" class="btn btn-register">SIGN IN</a></li>
       </ul>
     </nav>
   </header>
   <div class="profile-container">
     <h1>Your JDM Profile</h1>
-    <form class="profile-form">
-      <!-- Personal Information Section -->
-      <fieldset>
-        <legend>Personal Information</legend>
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" value="JohnDoe123" required>
-
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" value="johndoe@example.com" required>
-
-        <label for="phone">Phone Number:</label>
-        <input type="tel" id="phone" name="phone" value="123-456-7890">
-      </fieldset>
-
-      <!-- Preferences Section -->
-      <fieldset>
-        <legend>Preferences</legend>
-        <label for="theme">Preferred Theme:</label>
-        <select id="theme" name="theme">
-          <option value="light">Light</option>
-          <option value="dark" selected>Dark</option>
-          <option value="blue">Blue</option>
-        </select>
-
-        <label>
-          <input type="checkbox" name="notifications" checked>
-          Enable Email Notifications
-        </label>
-      </fieldset>
-
-      <!-- Submit Button -->
-      <button type="submit">Save Changes</button>
-    </form>
+    
+    <!-- Profile Picture Display (Initially Empty) -->
+    <div class="profile-picture-container">
+      <img id="profilePic" src="" alt="Profile Picture" class="profile-pic">
+    </div>
+    
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required>
+  
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+  
+    <label for="phone">Phone Number:</label>
+    <input type="tel" id="phone" name="phone"> 
+  
+    
+    <label for="profilePicUpload">Upload Profile Picture:</label>
+    <input type="file" id="profilePicUpload" name="profilePicUpload" accept="image/*">
+  
+    <button type="button" id="saveChangesButton">Save Changes</button> 
   </div>
-
+  
   <footer>
-    <div class="container">
+    <div class="footer-container">
       <div class="footer-content">
         <div class="footer-section">
           <h3>JDM Textbook Market</h3>
@@ -72,7 +59,7 @@
             <li><a href="index.html">Home</a></li>
             <li><a href="products.html">Search</a></li>
             <li><a href="listing.html">Sell</a></li>
-      <li><a href="favorites.html">Favorites</a></li>
+            <li><a href="favorites.html">Favorites</a></li>
             <li><a href="support.html">Support</a></li>
             <li><a href="userLogin.html">Login</a></li>
           </ul>
@@ -89,4 +76,5 @@
     </div>
   </footer> 
 </body>
+<script src="../js/script.js"></script>
 </html>
