@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         isApproved: approve,
       });
 
-      // Remove row from table
+      
       document.getElementById(`row-${productId}`).remove();
 
       alert(`Product ${approve ? "approved" : "rejected"} successfully!`);
@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       const productRef = doc(db, "products", productId);
       await deleteDoc(productRef);
 
-      // Remove row from table
+      
       document.getElementById(`row-${productId}`).remove();
 
       alert("Product rejected successfully!");
@@ -90,7 +90,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     productsTable.appendChild(tableBody);
   }
 
-  // Make handleApproval available globally
+  
   window.handleApproval = handleApproval;
   window.handleRejection = handleRejection;
 
@@ -107,3 +107,101 @@ document.addEventListener("DOMContentLoaded", async () => {
     products.length + approvedBooks.length
   }`;
 });
+
+let totalSales = 1000;
+  let pendingOrders = 1000;
+  let booksSold = 1000;
+
+  
+  window.onload = function() {
+    
+    const salesCtx = document.getElementById('salesChart').getContext('2d');
+    const salesChart = new Chart(salesCtx, {
+      type: 'bar',
+      data: {
+        labels: ['Total Sales', 'Pending Orders', 'Books Sold'],
+        datasets: [{
+          label: 'Sales Overview',
+          data: [totalSales, pendingOrders, booksSold], 
+          backgroundColor: [
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(153, 102, 255, 0.2)'
+          ],
+          borderColor: [
+            'rgba(75, 192, 192, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(153, 102, 255, 1)'
+          ],
+          borderWidth: 3
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false }
+        },
+        scales: {
+          y: { beginAtZero: true }
+        }
+      }
+    });
+
+    const booksSoldCtx = document.getElementById('booksSoldChart').getContext('2d');
+    const booksSoldChart = new Chart(booksSoldCtx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Fiction', 'Non-Fiction', 'Textbooks'],
+        datasets: [{
+          label: 'Books Sold Breakdown',
+          data: [totalSales, pendingOrders, booksSold], 
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)'
+          ],
+          borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)'
+          ],
+          borderWidth: 3
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: true }
+        }
+      }
+    });
+
+    document.getElementById('newBookButton').addEventListener('click', function() {
+      window.location.href = 'listing.html';
+    });
+
+    
+    function updateStats() {
+      document.getElementById('totalSales').textContent = `Total Sales: $${totalSales}`;
+      document.getElementById('pendingOrders').textContent = `Pending Orders: ${pendingOrders}`;
+      document.getElementById('booksSold').textContent = `Books Sold: ${booksSold}`;
+
+      
+      salesChart.data.datasets[0].data = [totalSales, pendingOrders, booksSold];
+      salesChart.update();
+
+      
+      booksSoldChart.data.datasets[0].data = [totalSales, pendingOrders, booksSold];
+      booksSoldChart.update();
+    }
+
+    
+    setTimeout(() => {
+      totalSales = 500;
+      pendingOrders = 20;
+      booksSold = 30;
+      updateStats();  
+    }, 2000); 
+  };

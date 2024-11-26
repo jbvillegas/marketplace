@@ -20,7 +20,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   const renderProducts = (products) => {
     productsGrid.innerHTML = "";
 
-    // Limit to 3 products
     const productsToRender = products.slice(0, 3);
 
     productsToRender.forEach((product) => {
@@ -77,7 +76,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   searchButton.addEventListener("click", handleSearch);
 
-  // Add event listeners to category buttons and redirect to products.html with the category parameter
+  
   if (auth.currentUser) {
     btnRegister.innerHTML = "Sign Out";
     btnRegister.addEventListener("click", async (e) => {

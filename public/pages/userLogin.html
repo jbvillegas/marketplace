@@ -16,7 +16,6 @@
 <body>
     
     <div class="container" id="container">
-        <!-- Sign Up Form -->
         <div class="form-container sign-up">
             <form id="signUpForm">
                 <h1>Create Account</h1>
@@ -34,7 +33,6 @@
             </form>
         </div>
 
-        <!-- Sign In Form -->
         <div class="form-container sign-in">
             <form id="signInForm">
                 <h1>Sign In</h1>
@@ -52,7 +50,7 @@
             </form>
         </div>
 
-        <!-- Overlay -->
+        <!-- Toggle between Sign Up and Sign In -->
         <div class="toggle-container">
             <div class="toggle">
                 <div class="toggle-panel toggle-left">
@@ -105,7 +103,7 @@
         });
 
 
-        // Handle Sign Up
+        /* Sign Up */
         document.getElementById("signUpForm").addEventListener("submit", async (e) => {
             e.preventDefault();
             const name = document.getElementById("name").value;
@@ -129,7 +127,7 @@
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                 const user = userCredential.user;
 
-                // Create user document in Firestore
+                /*Store user data in Firestore*/
                 await setDoc(doc(db, "users", user.uid), {
                     name: name,
                     email: email,
@@ -147,7 +145,7 @@
             }
         });
 
-        // Handle Sign In
+        /* Sign In */
         document.getElementById("signInForm").addEventListener("submit", async (e) => {
             e.preventDefault();
             const email = document.getElementById("signInEmail").value.trim();

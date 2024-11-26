@@ -73,7 +73,7 @@ const renderProducts = (products) => {
   products.forEach((product) => {
     const productCard = document.createElement("div");
     productCard.classList.add("product-card");
-    productCard.setAttribute("data-id", product.id); // Ensure data-id is set correctly
+    productCard.setAttribute("data-id", product.id); 
     productCard.innerHTML = `
       <div class="product-image">
         <img src="${product.image}" alt="${product.title}" />
@@ -97,7 +97,7 @@ const renderProducts = (products) => {
     productsGrid.appendChild(productCard);
   });
 
-  // Add event listeners to remove buttons
+  
   document.querySelectorAll(".btn-favorite").forEach((button) => {
     button.addEventListener("click", async (event) => {
       const productId = event.target.dataset.id;
@@ -116,7 +116,7 @@ const removeFavorite = async (productId) => {
       favorites: arrayRemove(productId),
     });
 
-    // Remove the product card from the DOM
+    
     const productCard = document.querySelector(
       `.product-card[data-id="${productId}"]`
     );

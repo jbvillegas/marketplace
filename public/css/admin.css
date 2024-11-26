@@ -14,7 +14,6 @@ body {
     flex-direction: column;
 }
 
-/* Sidebar Styles */
 .sidebar {
     background-color: #493628;
     width: 250px;
@@ -50,7 +49,7 @@ body {
     transform: translateX(5px);
 }
 
-/* Content Area Styles */
+
 .content {
     margin-left: 250px;
     padding: 20px;
@@ -60,7 +59,7 @@ body {
     gap: 20px;
 }
 
-/* Header Styles */
+
 .header {
     background-color: #fff;
     padding: 20px;
@@ -74,7 +73,7 @@ body {
     font-weight: 600;
 }
 
-/* Card Styles */
+
 .card {
     background-color: #fff;
     border-radius: 8px;
@@ -102,7 +101,7 @@ body {
     color: #666;
 }
 
-/* Button Styles */
+
 .btn {
     background-color: #493628;
     color: #fff;
@@ -122,7 +121,7 @@ body {
     transform: scale(1.05);
 }
 
-/* Table Styles */
+
 .table {
     width: 100%;
     border-collapse: collapse;
@@ -146,7 +145,7 @@ body {
     background-color: #f5f5f5;
 }
 
-/* Pagination Styles */
+
 .pagination {
     display: flex;
     justify-content: center;
@@ -170,7 +169,7 @@ body {
     transform: scale(1.1);
 }
 
-/* Footer Styles */
+
 .footer {
     background-color: #fff;
     padding: 15px;
@@ -249,4 +248,8 @@ canvas {
   .table button {
     padding: 5px 10px;
     font-size: 12px;
+  }
+.canvas {
+    width: 100% !important;
+    height: 300px !important;
   }

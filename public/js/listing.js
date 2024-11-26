@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Add file input listener to validate and show selected filename
+  
   imageInput.addEventListener('change', (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
       
-      // Validate file name (no spaces or special characters)
+      /*check valid filename*/
       const safeName = file.name.replace(/[^a-z0-9.]/gi, '-').toLowerCase();
       if (safeName !== file.name) {
         alert('Note: The image filename will be saved as: ' + safeName);
@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
       submitButton.disabled = true;
       submitButton.textContent = 'Submitting...';
 
-      // Get image filename and sanitize it
+      /*check image file*/
       const imageFile = imageInput.files[0];
       if (!imageFile) {
         throw new Error('Please select an image file');
@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const docRef = await addDoc(collection(db, "products"), formData);
       console.log("Product submitted with ID:", docRef.id);
 
-      // Show detailed instructions
+      /*show detailed instruuctions*/
       const message = `
 Listing submitted successfully!
 
